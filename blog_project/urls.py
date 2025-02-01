@@ -20,9 +20,13 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('posts.urls')),
     path('api/v1/', include('posts.urls')),
     path('api-auth/', include('rest_framework.urls')),
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.jwt')),
+    path('auth/', include('djoser.urls.authtoken'))
     # path('api/v1/', include('rest_auth.urls')),
-    # path('api/v1/rest-auth/', include('rest_auth.urls')),
-    path('api/v1/rest-auth/registration/', include('rest_auth.registration.urls')),
+    #  path('api/v1/rest-auth/', include('rest_auth.urls')),
+    # path('api/v1/rest-auth/registration/', include('rest_auth.registration.urls')),
 ]

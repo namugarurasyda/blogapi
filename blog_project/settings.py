@@ -1,4 +1,6 @@
 from pathlib import Path
+from datetime import timedelta
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,12 +29,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
 
-    'rest_framework',
-    'rest_framework.authtoken',
-    'rest_auth',
-     'allauth',
+    # apps
 
     'posts.apps.PostsConfig',
+
+
+
+    # third party
+    'rest_framework',
+    'rest_framework.authtoken',
+    'djoser',
+
 
 ]
 
@@ -42,9 +49,16 @@ REST_FRAMEWORK = {
  ],
 
  'DEFAULT_AUTHENTICATION_CLASSES': [ # new
+  'rest_framework_simplejwt.authentication.JWTAuthentication',
  'rest_framework.authentication.SessionAuthentication',
- 'rest_framework.authentication.TokenAuthentication', 
+ 'rest_framework.authentication.TokenAuthentication',
  ],
+ 
+    
+        
+    
+ 
+ 
  }
 
 
@@ -87,6 +101,15 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+}
+
+
+
+SIMPLE_JWT = {
+   'AUTH_HEADER_TYPES': ('JWT',),
+   "ACCESS_TOKEN_LIFETIME": timedelta(days=20),
+   "REFRESH_TOKEN_LIFETIME": timedelta(days=20),
+
 }
 
 
@@ -134,3 +157,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 SITE_ID = 1
+
+DJOSER = {
+    "SERIALIZERS" :{
+      'user_create': 'posts.serializers.MyUserCreateSerializer'
+}
+}
+
+
+#  access eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQwMTczMDgyLCJpYXQiOjE3Mzg0NDUwMjQsImp0aSI6IjJmYjQ4ZmEwZjdiNzQ2ODFhY2IyNGZmZjhiMmEyNjdjIiwidXNlcl9pZCI6MX0.R7Bq1wxIFAK3Q3ghswK5TUhsFn9Y47MUnxavWa--dSE
